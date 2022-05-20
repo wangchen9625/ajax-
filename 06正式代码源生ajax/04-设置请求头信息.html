@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 200px;
+            width: 200px;
+            border: 1px solid orange;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <p>post 鼠标放到div上 发送post请求,得到结果存入div中</p>
+    <script>
+        let div = document.querySelector('div');
+        div.addEventListener('mouseover',function(){
+            //绑定事件
+            //1 创建对象
+            let xhl = new XMLHttpRequest();
+            //2 初始化 设置类型与url
+            xhl.open('POST','http://127.0.0.1:8000/server');
+            //服务单配置对应的路由规则
+            //----------------------设置请求头
+            xhl.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+            //'Content-Type','application/x-www-form-urlencoded' 设置请求头信息,固定信息
+            //Content-Type是预定义的头类型,可以接受
+            xhl.setRequestHeader('name',"zhangsan");//name 是自定义的头,服务器不能接受,可以通过配置接受所有的头类型
+            
+
+            //3 发送
+            xhl.send('a=100&b=200&c=300');
+            xhl.onreadystatechange = function(){
+                if(xhl.readyState == 4){
+                    if(xhl.status >= 200 && xhl.status < 300){
+                        //处理服务端返回的结果
+                        div.innerHTML = xhl.response;
+                    }
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

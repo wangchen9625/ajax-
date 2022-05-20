@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 200px;
+            width: 200px;
+            border: 1px solid #90d
+        }
+    </style>
+</head>
+<body>
+    <div>
+    
+    </div>
+    <p>在窗口按下键盘事件</p>
+    <script>
+        let div = document.querySelector('div');
+        window.onkeydown = function(){
+            // console.log("test");
+            let xhl = new XMLHttpRequest();
+            xhl.responseType = 'json';//接收数据自动转成json格式
+            xhl.open('GET','http:127.0.0.1:8000/json-server');
+            xhl.send();
+            xhl.onreadystatechange = function(){
+                if(xhl.readyState == 4){
+                    if(xhl.status >= 200 && xhl.status < 300){
+
+                        // 手动数据转换
+                        // let data = JSON.parse(xhl.response);
+                        // console.log(data);
+                        // div.innerHTML = data.name;
+                        //自动转换
+                        //借助xhl的属性转换键第26行代码
+                        console.log(xhl.response);
+                        div.innerHTML = xhl.response.name;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
