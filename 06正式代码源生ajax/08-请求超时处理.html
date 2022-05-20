@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax get</title>
+    <style>
+        .result{
+            width: 200px;
+            height: 300px;
+            border: 1px solid #90b;
+        }
+    </style>
+</head>
+<body>
+    <button>发送get请求</button>
+    <div class="result"></div>
+    <script>
+        let btn = document.getElementsByTagName('button')[0];
+        let result = document.querySelector('.result');
+        btn.addEventListener('click',function(){
+            const xml = new XMLHttpRequest();
+            //超时设置
+            xml.timeout = 2000;
+            //超时回调
+            xml.ontimeout = function(){
+                alert("网络超时");
+            }
+            //网络异常 问题
+            xml.onerror = function(){
+                alert("网络异常");
+            }
+            xml.open("GET","http://127.0.0.1:8000/delay");
+            xml.send();
+            xml.onreadystatechange = function(){
+                if(xml.readyState === 4){
+                    if(xml.status >= 200 && xml.status < 300){
+                        result.innerHTML = xml.response;
+                    }
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html> 

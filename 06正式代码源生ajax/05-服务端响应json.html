@@ -24,7 +24,7 @@
             // console.log("test");
             let xhl = new XMLHttpRequest();
             xhl.responseType = 'json';//接收数据自动转成json格式
-            xhl.open('GET','http:127.0.0.1:8000/json-server');
+            xhl.open('GET','http://127.0.0.1:8000/json-server');
             xhl.send();
             xhl.onreadystatechange = function(){
                 if(xhl.readyState == 4){

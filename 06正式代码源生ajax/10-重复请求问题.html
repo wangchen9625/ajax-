@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax get</title>
+    <style>
+        .result{
+            width: 200px;
+            height: 300px;
+            border: 1px solid #90b;
+        }
+    </style>
+</head>
+<body>
+    <button>发送请求</button>
+    <button>取消请求</button>
+    <div class="result"></div>
+    <script>
+        const btns = document.querySelectorAll('button');
+        //取消abort 是x的一个操作, 所以需要x全局
+        let x = null;
+        //点击的时候查看是否已经有同样的请求,有的话取消掉该操作
+        //增加标识变量
+        let isSending = false;//false 没发, true 发
+        btns[0].onclick = function(){
+            if(isSending) return;
+            x = new XMLHttpRequest();
+            isSending = true;
+            x.open("GET","http://127.0.0.1:8000/cancleop");
+            x.send();
+            x.onreadystatechange = function(){
+                if(x.readyState === 4){
+                    isSending = false;
+                }
+            }
+        }
+        //abort 取消
+        btns[1].onclick = function(){
+            x.abort();
+        }
+    </script>
+</body>
+</html> 
